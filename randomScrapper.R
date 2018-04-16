@@ -1,3 +1,4 @@
+require("XML")
 #----------Load a webpage
 loadWebPage<-"let(alias=list(
   x='webpage'
