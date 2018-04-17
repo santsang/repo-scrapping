@@ -1,4 +1,11 @@
-require("XML")
+#----------Load pages
+for (i in (pkg<-c("wrapr","XML"))) {
+  if(i %in% rownames(installed.packages()) == F) {
+    install.packages(i,lib=.libPaths(),dependencies=T)
+  }
+}
+sapply(pkg,require,character.only=T)
+
 #----------Load a webpage
 loadWebPage<-"let(alias=list(
   x='webpage'
@@ -10,7 +17,6 @@ loadWebPage<-"let(alias=list(
   }
 )"
 
-
 #----------Scrap a webpage
 saveWebPage<-function(i=1,url,totPage=1,fPrefix="/trialSearch",upperT=120) {
   library(XML)
@@ -18,12 +24,12 @@ saveWebPage<-function(i=1,url,totPage=1,fPrefix="/trialSearch",upperT=120) {
   consT<-runif(1)
   t<-sample(c(consT+ramT,consT*ramT),1)
   t<-ifelse(t<20,t+20,t)  
-  Sys.sleep(t)
   print(paste("Streaming page", (i+1), "in", round(t,2), "seconds:)..."))
   flush.console()
-  (suppressWarnings(webpage<-readLines(url)))
-  unlink(url)
+  Sys.sleep(t)
+  webpage<-RCurl::getURL(url)
   doc<-eval(parse(text=loadWebPage))
   id<-sprintf(paste0("%0",nchar(totPage+1),"d"),i+1)
   saveXML(doc,file=paste0(wkDir,fPrefix,id,".xml"),compression=9)
 } 
+
