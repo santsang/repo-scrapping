@@ -11,10 +11,6 @@ urls<-c("https://scholar.google.co.uk/scholar?start=10&q=sandro+tsang+arrow+phys
 (wkDir<-getwd())
 fPrefix<-"/1test" #testing
 ind<-1:(nbr<-length(urls))
-foreach(i=ind) %:% foreach(j=urls[i]) %dopar%
-  saveWebPage(i,j,totPage=nbr,fPrefix=fPrefix)
-
-
 for (i in ind) {
   saveWebPage(i,urls[i],totPage=nbr,fPrefix=fPrefix)
 }
