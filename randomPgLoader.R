@@ -1,4 +1,4 @@
-#----------Load pages
+#----------Load packages
 for (i in (pkg<-c("wrapr","XML"))) {
   if(i %in% rownames(installed.packages()) == F) {
     install.packages(i,lib=.libPaths(),dependencies=T)
